@@ -1,9 +1,11 @@
 package service
 
 import (
+	"context"
 	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"restaurantnotificationservice/custom"
+	"restaurantnotificationservice/db"
 	"restaurantnotificationservice/dto"
 	"restaurantnotificationservice/interfaces"
 	"restaurantnotificationservice/models"
@@ -32,5 +34,14 @@ func (s *NotificationService) CreateNewNotification(request *dto.NotificationReq
 		DeletedAt:      "",
 		Status:         1,
 	}
+	// Save into DB
+	_, insertErr := db.GetCollection().InsertOne(context.Background(), newNotification)
+	if insertErr != nil {
+		err.Message = "Insert Error"
+		err.ErrorField = insertErr.Error()
+		err.Field = "Notification Service"
+		return custom.Data[models.Notification]{}, err
+	}
+
 	return custom.Data[models.Notification]{newNotification}, custom.ErrorCustomStruct{}
 }

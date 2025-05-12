@@ -26,7 +26,7 @@ func ConnectionDB() (*mongo.Client, error) {
 }
 
 // Get Collection Notification
-func GetCollection(name string) *mongo.Collection {
+func GetCollection() *mongo.Collection {
 	if MongoClient == nil {
 		log.Fatalf("Error happening in DB Connection progress.")
 	}
