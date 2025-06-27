@@ -42,6 +42,5 @@ func (s *NotificationService) CreateNewNotification(request *dto.NotificationReq
 		err.Field = "Notification Service"
 		return custom.Data[models.Notification]{}, err
 	}
-
 	return custom.Data[models.Notification]{newNotification}, custom.ErrorCustomStruct{}
 }
